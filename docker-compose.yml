@@ -14,7 +14,9 @@ services:
 
 volumes:
   static_volume_thalos:
+    external: true
   media_volume_thalos:
+    external: true
 
 networks:
   nginx_network:
