@@ -4,6 +4,7 @@ services:
   nginx:
     restart: always
     build: .
+    user: root
     volumes:
       - static_volume_thalos:/root/www/ThalosCinemaSystem/staticfiles
       - media_volume_thalos:/root/www/ThalosCinemaSystem/mediafiles/upload_thumbnails
