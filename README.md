@@ -1,3 +1,3 @@
 # VPS-nginx
 
-Reverse proxy for Django services.
+Reverse proxy for my all applications.
