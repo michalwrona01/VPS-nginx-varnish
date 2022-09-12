@@ -4,18 +4,10 @@ services:
   nginx:
     restart: always
     build: .
-    user: root
-    volumes:
-      - static_volume_thalos:/root/www/ThalosCinemaSystem/staticfiles
-      - media_volume_thalos:/root/www/ThalosCinemaSystem/mediafiles/upload_thumbnails
     ports:
       - "80:80"
     networks:
       - nginx_network
-
-volumes:
-  static_volume_thalos:
-  media_volume_thalos:
 
 networks:
   nginx_network:
