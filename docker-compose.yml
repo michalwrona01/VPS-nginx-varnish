@@ -6,7 +6,7 @@ services:
     build: .
     volumes:
       - /var/www/ThalosCinemaSystem/staticfiles:/var/www/ThalosCinemaSystem/staticfiles
-      - /var/www/ThalosCinemaSystem/mediafiles/upload_thumbnails:/var/www/ThalosCinemaSystem/mediafiles/upload_thumbnails
+      - /var/www/ThalosCinemaSystem/mediafiles:/var/www/ThalosCinemaSystem/mediafiles
     ports:
       - "80:80"
     networks:
