@@ -4,6 +4,9 @@ services:
   nginx:
     restart: always
     build: .
+    volumes:
+      - static_volume:/var/www/ThalosCinemaSystem/staticfiles
+      - media_volume:/var/www/ThalosCinemaSystem/mediafiles
     ports:
       - "80:80"
     networks:
@@ -11,4 +14,10 @@ services:
 
 networks:
   nginx_network:
+    external: true
+
+volumes:
+  static_volume:
+    external: true
+  media_volume:
     external: true
