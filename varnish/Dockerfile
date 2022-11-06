@@ -1,3 +1,3 @@
 FROM varnish:stable
 
-COPY COPY default.vcl /etc/varnish/
+COPY default.vcl /etc/varnish/
