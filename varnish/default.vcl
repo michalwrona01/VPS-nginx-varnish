@@ -6,26 +6,9 @@ backend server1 {
     .host = "nginx";
     .port = "8080";
     .max_connections = 100;
-    .probe = {
-        .request =
-            "HEAD / HTTP/1.1"
-            "Host: nginx"
-            "Connection: close"
-            "User-Agent: Varnish Health Probe";
-        .interval  = 10s;
-        .timeout   = 5s;
-        .window    = 5;
-        .threshold = 3;
-    }
     .connect_timeout        = 5s;
     .first_byte_timeout     = 90s;
     .between_bytes_timeout  = 2s;
-}
-
-acl purge {
-    "nginx";
-    "127.0.0.1";
-    "::1";
 }
 
 sub vcl_recv {
