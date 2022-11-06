@@ -9,7 +9,7 @@ backend server1 {
     .probe = {
         .request =
             "HEAD / HTTP/1.1"
-            "Host: localhost"
+            "Host: nginx"
             "Connection: close"
             "User-Agent: Varnish Health Probe";
         .interval  = 10s;
@@ -23,7 +23,7 @@ backend server1 {
 }
 
 acl purge {
-    "localhost";
+    "nginx";
     "127.0.0.1";
     "::1";
 }
