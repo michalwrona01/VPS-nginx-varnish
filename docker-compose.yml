@@ -2,14 +2,30 @@ version: "3.3"
 
 services:
   nginx:
+    container_name: nginx
     restart: always
-    build: .
+    build: ./nginx
     volumes:
       - /var/www/ThalosCinemaSystem/staticfiles:/var/www/ThalosCinemaSystem/staticfiles
       - /var/www/ThalosCinemaSystem/mediafiles:/var/www/ThalosCinemaSystem/mediafiles
       - /var/www/majkelpc:/var/www/majkelpc
+    expose:
+      - "8080"
+    networks:
+      - nginx_network
+  varnish:
+    restart: always
+    container_name: varnish
+    build: ./varnish
+    volumes:
+      - ./varnish/default.vcl:/etc/varnish/default.vcl
     ports:
       - "80:80"
+    tmpfs:
+      - /var/lib/varnish:exec
+    command: "-p default_keep=300"
+    depends_on:
+      - nginx
     networks:
       - nginx_network
 
