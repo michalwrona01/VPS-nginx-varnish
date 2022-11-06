@@ -37,13 +37,6 @@ sub vcl_recv {
         set req.url = regsub(req.url, "\?$", "");
     }
 
-    if (req.method == "PURGE") {
-        if (!client.ip ~ purge) {
-            return (synth(405, client.ip + " is not allowed to send PURGE requests."));
-        }
-        return (purge);
-    }
-
     if (req.method != "GET" &&
         req.method != "HEAD" &&
         req.method != "PUT" &&
