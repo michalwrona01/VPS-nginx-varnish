@@ -26,6 +26,8 @@ services:
     command: "-p default_keep=300"
     depends_on:
       - nginx
+    networks:
+      - nginx_network
 
 networks:
   nginx_network:
