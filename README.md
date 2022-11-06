@@ -1,3 +1,3 @@
-# VPS-nginx
+# VPS-nginx-nginx
 
-Reverse proxy for my all applications.
+Reverse proxy for my all applications and varnish configurations.
