@@ -10,7 +10,7 @@ services:
       - /var/www/ThalosCinemaSystem/mediafiles:/var/www/ThalosCinemaSystem/mediafiles
       - /var/www/majkelpc:/var/www/majkelpc
     expose:
-      - "80"
+      - "8080"
     networks:
       - nginx_network
   varnish:
