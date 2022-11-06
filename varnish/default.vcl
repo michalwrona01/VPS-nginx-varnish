@@ -2,5 +2,5 @@ vcl 4.1;
 
 backend default {
     .host = "nginx";
-    .port = "80";
+    .port = "8080";
 }
