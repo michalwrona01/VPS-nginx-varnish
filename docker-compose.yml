@@ -9,7 +9,7 @@ services:
       - /var/www/ThalosCinemaSystem/staticfiles:/var/www/ThalosCinemaSystem/staticfiles
       - /var/www/ThalosCinemaSystem/mediafiles:/var/www/ThalosCinemaSystem/mediafiles
       - /var/www/majkelpc:/var/www/majkelpc
-    expose:
+    ports:
       - "80:80"
     networks:
       - nginx_network
