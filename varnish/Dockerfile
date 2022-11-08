@@ -1,4 +1,4 @@
 FROM varnish:stable
 
-RUN apt install curl
+RUN sudo apt install curl
 COPY default.vcl /etc/varnish/
