@@ -1,7 +1,7 @@
 vcl 4.1;
 
 backend server1 {
-    .host = "0.0.0.0";
+    .host = "nginx";
     .port = "8080";
 }
 
