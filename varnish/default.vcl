@@ -10,6 +10,11 @@ sub vcl_recv {
         unset req.http.Cookie;
         return(hash);
     }
+
+    if (req.method == "FULLBAN") {
+        ban("req.http.host ~ .*");
+        return (synth(200, "Full cache cleared"));
+    }
 }
 
 sub vcl_backend_response {
