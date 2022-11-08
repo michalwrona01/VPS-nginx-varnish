@@ -2,7 +2,7 @@ vcl 4.1;
 
 backend server1 {
     .host = "nginx";
-    .port = "8080";
+    .port = "80";
 }
 
 sub vcl_recv {

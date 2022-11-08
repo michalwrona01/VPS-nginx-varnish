@@ -10,7 +10,7 @@ services:
       - /var/www/ThalosCinemaSystem/mediafiles:/var/www/ThalosCinemaSystem/mediafiles
       - /var/www/majkelpc:/var/www/majkelpc
     expose:
-      - "8080"
+      - "80:80"
     networks:
       - nginx_network
 
@@ -21,7 +21,7 @@ services:
     volumes:
       - ./varnish/default.vcl:/etc/varnish/default.vcl
     ports:
-      - "80:80"
+      - "8080:80"
     tmpfs:
       - /var/lib/varnish:exec
     command: "-p default_keep=300"
