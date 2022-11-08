@@ -9,8 +9,8 @@ services:
       - /var/www/ThalosCinemaSystem/staticfiles:/var/www/ThalosCinemaSystem/staticfiles
       - /var/www/ThalosCinemaSystem/mediafiles:/var/www/ThalosCinemaSystem/mediafiles
       - /var/www/majkelpc:/var/www/majkelpc
-    ports:
-      - "80:80"
+    expose:
+      - "8080"
     networks:
       - nginx_network
 
@@ -21,12 +21,14 @@ services:
     volumes:
       - ./varnish/default.vcl:/etc/varnish/default.vcl
     ports:
-      - "8080:8080"
+      - "80:80"
     tmpfs:
       - /var/lib/varnish:exec
     command: "-p default_keep=300"
     depends_on:
       - nginx
+    environment:
+      - VARNISH_SIZE=2G
     networks:
       - nginx_network
 
