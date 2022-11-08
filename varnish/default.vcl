@@ -2,7 +2,7 @@ vcl 4.1;
 
 import std;
 
-backend server1 {
+backend  {
     .host = "nginx";
     .port = "8080";
     .max_connections = 100;
@@ -23,9 +23,7 @@ backend server1 {
 }
 
 acl purge {
-    "localhost";
-    "127.0.0.1";
-    "::1";
+    "thalos.software";
 }
 
 sub vcl_recv {
