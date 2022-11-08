@@ -1,7 +1,7 @@
 vcl 4.1;
 
 backend server1 {
-    .host = "nginx";
+    .host = "thalos.software";
     .port = "8080";
 }
 
