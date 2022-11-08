@@ -21,7 +21,7 @@ services:
     volumes:
       - ./varnish/default.vcl:/etc/varnish/default.vcl
     ports:
-      - "8080:80"
+      - "8080:8080"
     tmpfs:
       - /var/lib/varnish:exec
     command: "-p default_keep=300"
