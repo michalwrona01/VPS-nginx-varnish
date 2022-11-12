@@ -11,6 +11,12 @@ backend server1 {
     .between_bytes_timeout  = 2s;
 }
 
+acl purge {
+    "localhost";
+    "127.0.0.1";
+    "::1";
+}
+
 sub vcl_recv {
     set req.http.Host = regsub(req.http.Host, ":[0-9]+", "");
     unset req.http.proxy;
@@ -42,6 +48,9 @@ sub vcl_recv {
     }
 
     if (req.method == "PURGE") {
+        if (!client.ip ~ purge) {
+            return (synth(405, client.ip + " is not allowed to send PURGE requests."));
+        }
         return (purge);
     }
 
@@ -75,16 +84,6 @@ sub vcl_recv {
     if (req.http.cookie ~ "^\s*$") {
         unset req.http.cookie;
     }
-
-    if (req.method == "FULLBAN") {
-                if (std.ban("req.http.host == " + req.http.host +
-                    " && req.url == " + req.url)) {
-                        return(synth(200, "Ban added"));
-                } else {
-                        # return ban error in 400 response
-                        return(synth(400, std.ban_error()));
-                }
-        }
 }
 
 sub vcl_hash {
