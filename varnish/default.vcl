@@ -6,9 +6,9 @@ backend nginx_1 {
     .host = "nginx_1";
     .port = "8080";
     .probe = {
-        .url = "/";
+        .url = "/health-check";
         .timeout = 1s;
-        .interval = 5s;
+        .interval = 2s;
         .window = 5;
         .threshold = 3;
     }
@@ -18,9 +18,9 @@ backend nginx_2 {
     .host = "nginx_2";
     .port = "8081";
     .probe = {
-        .url = "/";
+        .url = "/health-check";
         .timeout = 1s;
-        .interval = 5s;
+        .interval = 2s;
         .window = 5;
         .threshold = 3;
     }
