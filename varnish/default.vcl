@@ -30,11 +30,6 @@ sub vcl_recv {
         ban("req.http.host ~ .*");
         return (synth(200, "Full cache cleared"));
     }
-    
-    if (req.method != "GET" && req.method != "HEAD") {
-        return(pass);
-    }
-    return(lookup);
 }
 
 sub vcl_backend_response {
@@ -42,9 +37,4 @@ sub vcl_backend_response {
         unset beresp.http.Set-Cookie;
         set beresp.ttl = 1d;
     }
-    return(deliver);
-}
-
-sub vcl_deliver {
-  return(deliver);
 }
