@@ -5,22 +5,22 @@ backend nginx_1 {
     .port = "8080";
 }
 
-backend nginx_cms {
-    .host = "nginx_cms";
+backend nginx_infoboard_cms {
+    .host = "nginx_infoboard_cms";
     .port = "8082";
 }
 
-backend nginx_front {
-    .host = "nginx_cms";
+backend nginx_infoboard_front {
+    .host = "nginx_infoboard_front";
     .port = "8081";
 }
 
 sub vcl_recv {
     if (req.http.host ~ "infoboard.wronamichal.pl") {
-        set req.backend_hint = nginx_front;
+        set req.backend_hint = nginx_infoboard_front;
     }
     elsif (req.http.host ~ "cms.infoboard.wronamichal.pl") {
-        set req.backend_hint = nginx_cms;
+        set req.backend_hint = nginx_infoboard_cms;
     }
     else {
         set req.backend_hint = nginx_1;
