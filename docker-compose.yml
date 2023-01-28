@@ -14,19 +14,6 @@ services:
     networks:
       - nginx_network
 
-  nginx_2:
-    container_name: nginx_2
-    restart: always
-    build: ./nginx_2
-    volumes:
-      - /var/www/ThalosCinemaSystem/staticfiles:/var/www/ThalosCinemaSystem/staticfiles
-      - /var/www/ThalosCinemaSystem/mediafiles:/var/www/ThalosCinemaSystem/mediafiles
-      - /var/www/majkelpc:/var/www/majkelpc
-    ports:
-      - "8081:8081"
-    networks:
-      - nginx_network
-
   varnish:
     restart: always
     container_name: varnish
@@ -40,9 +27,8 @@ services:
     command: "-p default_keep=300"
     depends_on:
       - nginx_1
-      - nginx_2
     environment:
-      - VARNISH_SIZE=4G
+      - VARNISH_SIZE=2G
     networks:
       - nginx_network
 

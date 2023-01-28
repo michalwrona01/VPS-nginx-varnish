@@ -7,15 +7,9 @@ backend nginx_1 {
     .port = "8080";
 }
 
-backend nginx_2 {
-    .host = "nginx_2";
-    .port = "8081";
-}
-
 sub vcl_init {
     new balancer = directors.round_robin();
     balancer.add_backend(nginx_1);
-    balancer.add_backend(nginx_2);
 }
 
 sub vcl_recv {
