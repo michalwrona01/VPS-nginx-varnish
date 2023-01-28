@@ -6,12 +6,12 @@ backend nginx_1 {
 }
 
 backend nginx_infoboard_cms {
-    .host = "0.0.0.0";
+    .host = "nginx_infoboard_cms";
     .port = "8082";
 }
 
 backend nginx_infoboard_front {
-    .host = "0.0.0.0";
+    .host = "nginx_infoboard_front";
     .port = "8081";
 }
 
