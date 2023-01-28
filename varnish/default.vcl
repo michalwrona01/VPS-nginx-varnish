@@ -7,12 +7,12 @@ backend nginx_1 {
 
 backend nginx_cms {
     .host = "nginx_cms";
-    .port = "8082"
+    .port = "8082";
 }
 
 backend nginx_front {
     .host = "nginx_cms";
-    .port = "8081"
+    .port = "8081";
 }
 
 sub vcl_recv {
