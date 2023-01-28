@@ -30,7 +30,7 @@ services:
     environment:
       - VARNISH_SIZE=2G
     networks:
-      - nginx_network
+#      - nginx_network
       - infoboard_network
 
 networks:
