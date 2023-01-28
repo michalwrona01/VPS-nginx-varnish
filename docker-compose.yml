@@ -31,7 +31,6 @@ services:
       - VARNISH_SIZE=2G
     networks:
       - nginx_network
-      - infoboard_network
 
 networks:
   nginx_network:
