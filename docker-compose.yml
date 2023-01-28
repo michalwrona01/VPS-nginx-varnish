@@ -36,5 +36,5 @@ services:
 networks:
   nginx_network:
     external: true
-  infoboard_newtork:
+  infoboard_network:
     external: true
