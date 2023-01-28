@@ -16,13 +16,11 @@ backend nginx_infoboard_front {
 }
 
 sub vcl_recv {
-    if (req.http.host ~ "infoboard.wronamichal.pl") {
-        set req.backend_hint = nginx_infoboard_front;
-    }
-    elsif (req.http.host ~ "cms.infoboard.wronamichal.pl") {
+    if (req.http.host ~ "cms.infoboard.wronamichal.pl") {
         set req.backend_hint = nginx_infoboard_cms;
-    }
-    else {
+    } elsif (req.http.host ~ "infoboard.wronamichal.pl") {
+        set req.backend_hint = nginx_infoboard_front;
+    } else {
         set req.backend_hint = nginx_1;
     }
 
