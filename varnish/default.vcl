@@ -30,7 +30,7 @@ sub vcl_recv {
     }
 
     if (req.method == "FULLBAN") {
-        ban("req.http.host ~ .*");
+        ban("req.http.host == " + req.http.host + " && req.url == " + req.url);
         return (synth(200, "Full cache cleared"));
     }
 }
