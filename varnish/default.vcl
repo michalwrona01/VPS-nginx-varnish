@@ -30,8 +30,8 @@ sub vcl_recv {
     }
 
     if (req.method == "FULLBAN") {
-        ban(req.http.host);
-        return (synth(200, "Full cache cleared"));
+            ban("obj.status != 0");
+            return (synth(200, "Full cache cleared"));
     }
 }
 
