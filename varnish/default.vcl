@@ -29,7 +29,6 @@ sub vcl_recv {
 	      unset req.http.Authorization;
         return(hash);
     }
-    return(hash);
 }
 
 sub vcl_backend_response {
