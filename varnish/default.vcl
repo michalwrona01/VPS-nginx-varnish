@@ -15,6 +15,11 @@ backend nginx_infoboard_front {
     .port = "8081";
 }
 
+acl acl_ban {
+    "localhost";
+    "1.2.3.4"/32;
+}
+
 sub vcl_recv {
         if (req.http.host ~ "cms.infoboard.wronamichal.pl") {
             set req.backend_hint = nginx_infoboard_cms;
@@ -32,9 +37,10 @@ sub vcl_recv {
         if (req.method != "GET") {
             return (pass);
         }
-        if (req.method == "FULLBAN") {
-            ban("req.http.host ~ .*");
-            return (synth(200, "Full cache cleared"));
+        if (client.ip ~ acl_ban && req.method == "FULLBAN") {
+          ban("req.http.host == " + req.http.host);
+          # Throw a synthetic page so the request won't go to the backend.
+          return(synth(200, "Ban added"));
         }
         return(hash);
     }
