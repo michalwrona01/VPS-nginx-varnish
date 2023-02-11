@@ -17,7 +17,7 @@ backend nginx_infoboard_front {
 
 sub vcl_recv {
         if (req.method == "FULLBAN") {
-            ban("req.http.host");
+            ban("req.http.host ~ .*");
             return (synth(200, "Full cache cleared"));
         }
         if (req.http.host ~ "cms.infoboard.wronamichal.pl") {
