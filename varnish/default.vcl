@@ -50,9 +50,11 @@ sub vcl_backend_response {
 sub vcl_deliver {
     unset resp.http.Via;
     unset resp.http.X-Varnish;
-    unset resp.http.server;
+    unset resp.http.Server;
     unset resp.http.x-content-type-options;
     unset resp.http.x-frame-options;
     unset resp.http.vary;
+    unset resp.http.CF-Cache-Status;
+    unset resp.http.CF-RAY;
 }
 
