@@ -29,6 +29,10 @@ sub vcl_recv {
 	      unset req.http.Authorization;
         return(hash);
     }
+    if (req.method != "GET") {
+        return (pass);
+    }
+    return(hash);
 }
 
 sub vcl_backend_response {
