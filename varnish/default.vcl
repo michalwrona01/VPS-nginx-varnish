@@ -29,6 +29,8 @@ sub vcl_recv {
 	      unset req.http.Authorization;
         return(hash);
     }
+
+    unset req.http.via;
 }
 
 sub vcl_backend_response {
@@ -36,6 +38,5 @@ sub vcl_backend_response {
         unset beresp.http.Set-Cookie;
         set beresp.ttl = 1d;
     }
-    unset beresp.http.via;
 }
 
