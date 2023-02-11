@@ -39,8 +39,8 @@ sub vcl_backend_response {
 }
 
 sub vcl_deliver {
-    remove resp.http.Via;
-    remove resp.http.X-Varnish;
-    remove resp.http.Server;
+    unset resp.http.Via;
+    unset resp.http.X-Varnish;
+    unset resp.http.Server;
 }
 
