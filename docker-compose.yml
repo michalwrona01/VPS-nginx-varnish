@@ -28,7 +28,7 @@ services:
     depends_on:
       - nginx_1
     environment:
-      - VARNISH_SIZE=2G
+      - VARNISH_SIZE=4G
     networks:
       - nginx_network
       - infoboard_network
