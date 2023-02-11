@@ -36,6 +36,11 @@ sub vcl_backend_response {
         unset beresp.http.Set-Cookie;
         set beresp.ttl = 1d;
     }
-    unset beresp.http.Server;
+}
+
+sub vcl_deliver {
+    remove resp.http.Via;
+    remove resp.http.X-Varnish;
+    remove resp.http.Server;
 }
 
