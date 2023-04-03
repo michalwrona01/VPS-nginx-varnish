@@ -22,6 +22,10 @@ sub vcl_recv {
             ban("req.http.host ~ .*");
             return (synth(200, "Full cache cleared"));
         }
+        if (req.method == "INFOBOARD_FRONT_FULL_BAN") {
+            ban("req.http.host == infoboard.wronamichal.pl");
+            return (synth(200, "Full cache cleared"));
+        }
         if (req.http.host ~ "cms.infoboard.wronamichal.pl") {
             set req.backend_hint = nginx_infoboard_cms;
         } elsif (req.http.host ~ "infoboard.wronamichal.pl") {
