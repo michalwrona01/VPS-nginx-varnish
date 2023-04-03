@@ -8,11 +8,13 @@ backend nginx_1 {
 backend nginx_infoboard_cms {
     .host = "nginx_infoboard_cms";
     .port = "8082";
+    .first_byte_timeout = 10000s;
 }
 
 backend nginx_infoboard_front {
     .host = "nginx_infoboard_front";
     .port = "8081";
+    .first_byte_timeout = 10000s;
 }
 
 sub vcl_recv {
