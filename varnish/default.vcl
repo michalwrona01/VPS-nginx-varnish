@@ -17,6 +17,11 @@ backend nginx_infoboard_front {
     .first_byte_timeout = 10000s;
 }
 
+backend faker_app {
+    .host = "faker_app";
+    .port = "8083";
+}
+
 sub vcl_recv {
         if (req.method == "FULLBAN") {
             ban("req.http.host ~ .*");
@@ -30,11 +35,17 @@ sub vcl_recv {
             set req.backend_hint = nginx_infoboard_cms;
         } elsif (req.http.host ~ "infoboard.wronamichal.pl") {
             set req.backend_hint = nginx_infoboard_front;
+        } elsif (req.http.host ~ "faker.wronamichal.pl") {
+            set req.backend_hint = faker_app;
         } else {
             set req.backend_hint = nginx_1;
         }
 
         if (req.http.host == "cms.infoboard.wronamichal.pl") {
+            return (pass);
+        }
+        
+        if (req.http.host == "faker.wronamichal.pl") {
             return (pass);
         }
 
