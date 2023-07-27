@@ -22,11 +22,6 @@ backend faker_app {
     .port = "8083";
 }
 
-backend wordpress {
-    .host = "wordpress";
-    .port = "8084";
-}
-
 sub vcl_recv {
         if (req.method == "FULLBAN") {
             ban("req.http.host ~ .*");
@@ -42,8 +37,6 @@ sub vcl_recv {
             set req.backend_hint = nginx_infoboard_front;
         } elsif (req.http.host ~ "faker.wronamichal.pl") {
             set req.backend_hint = faker_app;
-        } elsif (req.http.host ~ "djqubus.wronamichal.pl") {
-            set req.backend_hint = wordpress;
         } else {
             set req.backend_hint = nginx_1;
         }
