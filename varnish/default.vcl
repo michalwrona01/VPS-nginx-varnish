@@ -23,7 +23,7 @@ backend faker_app {
 }
 
 backend wordpress {
-    .host = "wordpress";
+    .host = "172.18.0.11";
     .port = "8084";
 }
 
