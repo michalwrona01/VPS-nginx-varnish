@@ -28,28 +28,28 @@ sub vcl_recv {
             return (synth(200, "Full cache cleared"));
         }
         if (req.method == "INFOBOARD_FRONT_FULL_BAN") {
-            ban("req.http.host == infoboard.wronamichal.pl");
+            ban("req.http.host == infoboard.michalwrona.pl");
             return (synth(200, "Full cache cleared"));
         }
-        if (req.http.host ~ "cms.infoboard.wronamichal.pl") {
+        if (req.http.host ~ "cms.infoboard.michalwrona.pl") {
             set req.backend_hint = nginx_infoboard_cms;
-        } elsif (req.http.host ~ "infoboard.wronamichal.pl") {
+        } elsif (req.http.host ~ "infoboard.michalwrona.pl") {
             set req.backend_hint = nginx_infoboard_front;
-        } elsif (req.http.host ~ "faker.wronamichal.pl") {
+        } elsif (req.http.host ~ "faker.michalwrona.pl") {
             set req.backend_hint = faker_app;
         } else {
             set req.backend_hint = nginx_1;
         }
 
-        if (req.http.host == "cms.infoboard.wronamichal.pl") {
+        if (req.http.host == "cms.infoboard.michalwrona.pl") {
             return (pass);
         }
         
-        if (req.http.host == "faker.wronamichal.pl") {
+        if (req.http.host == "faker.michalwrona.pl") {
             return (pass);
         }
 
-        if (req.http.host == "djqubus.wronamichal.pl") {
+        if (req.http.host == "djqubus.michalwrona.pl") {
             return (pass);
         }
 
