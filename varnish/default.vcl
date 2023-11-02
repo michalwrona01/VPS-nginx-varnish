@@ -44,7 +44,7 @@ sub vcl_recv {
         }
 
         if (req.http.host == "faker.michalwrona.pl") {
-            return (pass);
+            set req.backend_hint = faker_app;
         }
 
         if (req.http.host == "djqubus.michalwrona.pl") {
