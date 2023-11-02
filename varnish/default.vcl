@@ -31,20 +31,19 @@ sub vcl_recv {
             ban("req.http.host == infoboard.michalwrona.pl");
             return (synth(200, "Full cache cleared"));
         }
-        if (req.http.host ~ "cms.infoboard.michalwrona.pl") {
+        if (req.http.host ~ "cms-infoboard.michalwrona.pl") {
             set req.backend_hint = nginx_infoboard_cms;
         } elsif (req.http.host ~ "infoboard.michalwrona.pl") {
             set req.backend_hint = nginx_infoboard_front;
-        } elsif (req.http.host ~ "faker.michalwrona.pl") {
-            set req.backend_hint = faker_app;
         } else {
             set req.backend_hint = nginx_1;
         }
 
+        if (req.http.host == "cms-infoboard.wronamichal.pl") {
         if (req.http.host == "cms.infoboard.michalwrona.pl") {
             return (pass);
         }
-        
+
         if (req.http.host == "faker.michalwrona.pl") {
             return (pass);
         }
