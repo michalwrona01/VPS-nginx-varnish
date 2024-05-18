@@ -5,17 +5,17 @@ backend nginx_1 {
     .port = "8080";
 }
 
-backend nginx_infoboard_cms {
-    .host = "nginx_infoboard_cms";
-    .port = "8082";
-    .first_byte_timeout = 10000s;
-}
-
-backend nginx_infoboard_front {
-    .host = "nginx_infoboard_front";
-    .port = "8081";
-    .first_byte_timeout = 10000s;
-}
+//backend nginx_infoboard_cms {
+//    .host = "nginx_infoboard_cms";
+//    .port = "8082";
+//    .first_byte_timeout = 10000s;
+//}
+//
+//backend nginx_infoboard_front {
+//    .host = "nginx_infoboard_front";
+//    .port = "8081";
+//    .first_byte_timeout = 10000s;
+//}
 
 backend faker_app {
     .host = "faker_app";
@@ -32,9 +32,11 @@ sub vcl_recv {
             return (synth(200, "Full cache cleared"));
         }
         if (req.http.host ~ "cms-infoboard.michalwrona.pl") {
-            set req.backend_hint = nginx_infoboard_cms;
+//            set req.backend_hint = nginx_infoboard_cms;
+            set req.backend_hint = nginx_1;
         } elsif (req.http.host ~ "infoboard.michalwrona.pl") {
-            set req.backend_hint = nginx_infoboard_front;
+//            set req.backend_hint = nginx_infoboard_front;
+            set req.backend_hint = nginx_1;
         } else {
             set req.backend_hint = nginx_1;
         }
