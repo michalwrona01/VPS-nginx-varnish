@@ -83,3 +83,16 @@ sub vcl_deliver {
     unset resp.http.CF-RAY;
 }
 
+sub vcl_recv {
+    if (req.http.upgrade ~ "(?i)websocket") {
+        return (pipe);
+    }
+}
+
+sub vcl_pipe {
+    if (req.http.upgrade) {
+        set bereq.http.upgrade = req.http.upgrade;
+        set bereq.http.connection = req.http.connection;
+    }
+}
+
