@@ -22,7 +22,24 @@ backend faker_app {
     .port = "8083";
 }
 
+
 sub vcl_recv {
+    if (req.http.upgrade) {
+        return (pipe);
+    }
+}
+
+sub vcl_pipe {
+    if (req.http.upgrade) {
+        set bereq.http.upgrade = req.http.upgrade;
+        set bereq.http.connection = req.http.connection;
+    }
+}
+
+sub vcl_recv {
+        if (req.http.host == "djqubus.michalwrona.pl") {
+            return (pass);
+        }
         if (req.method == "FULLBAN") {
             ban("req.http.host ~ .*");
             return (synth(200, "Full cache cleared"));
@@ -48,10 +65,6 @@ sub vcl_recv {
 
         if (req.http.host == "faker.michalwrona.pl") {
             set req.backend_hint = faker_app;
-        }
-
-        if (req.http.host == "djqubus.michalwrona.pl") {
-            return (pass);
         }
 
         if (req.url ~ "^[^?]*\.(7z|avi|bmp|bz2|css|csv|doc|docx|eot|flac|flv|gif|gz|ico|jpeg|jpg|js|less|mka|mkv|mov|mp3|mp4|mpeg|mpg|odt|ogg|ogm|opus|otf|pdf|png|ppt|pptx|rar|rtf|svg|svgz|swf|tar|tbz|tgz|ttf|txt|txz|wav|webm|webp|woff|woff2|xls|xlsx|xml|xz|zip)(\?.*)?$") {
@@ -81,18 +94,5 @@ sub vcl_deliver {
     unset resp.http.vary;
     unset resp.http.CF-Cache-Status;
     unset resp.http.CF-RAY;
-}
-
-sub vcl_recv {
-    if (req.http.upgrade ~ "(?i)websocket") {
-        return (pipe);
-    }
-}
-
-sub vcl_pipe {
-    if (req.http.upgrade) {
-        set bereq.http.upgrade = req.http.upgrade;
-        set bereq.http.connection = req.http.connection;
-    }
 }
 
