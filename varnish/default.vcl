@@ -39,6 +39,7 @@ sub vcl_recv {
             set req.backend_hint = nginx_1;
         } else {
             set req.backend_hint = nginx_1;
+            return (pass);
         }
 
         if (req.http.host == "cms-infoboard.wronamichal.pl") {
