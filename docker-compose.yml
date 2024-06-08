@@ -9,6 +9,7 @@ services:
       - /var/www/ThalosCinemaSystem/staticfiles:/var/www/ThalosCinemaSystem/staticfiles
       - /var/www/ThalosCinemaSystem/mediafiles:/var/www/ThalosCinemaSystem/mediafiles
       - /var/www/majkelpc:/var/www/majkelpc
+      - /var/www/order-song/staticfiles:/var/www/order-song/staticfiles
     ports:
       - "8080:8080"
     networks:
