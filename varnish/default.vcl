@@ -23,7 +23,7 @@ sub vcl_recv {
             return (synth(200, "Full cache cleared"));
         }
 
-        if (req.http.host ~ "djqubus.pl" || req.http.host ~ "admin.djqubus.pl") {
+        if (req.http.host ~ "www.djqubus.pl" || req.http.host ~ "djqubus.pl" || req.http.host ~ "admin.djqubus.pl") {
             set req.backend_hint = nginx_1;
             if (req.http.upgrade) {
                 return (pipe);
