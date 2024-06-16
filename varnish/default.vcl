@@ -5,28 +5,9 @@ backend nginx_1 {
     .port = "8080";
 }
 
-//backend nginx_infoboard_cms {
-//    .host = "nginx_infoboard_cms";
-//    .port = "8082";
-//    .first_byte_timeout = 10000s;
-//}
-//
-//backend nginx_infoboard_front {
-//    .host = "nginx_infoboard_front";
-//    .port = "8081";
-//    .first_byte_timeout = 10000s;
-//}
-
 backend faker_app {
     .host = "faker_app";
     .port = "8083";
-}
-
-
-sub vcl_recv {
-    if (req.http.upgrade) {
-        return (pipe);
-    }
 }
 
 sub vcl_pipe {
@@ -37,29 +18,19 @@ sub vcl_pipe {
 }
 
 sub vcl_recv {
-        if (req.http.host == "djqubus.michalwrona.pl") {
-            return (pass);
-        }
         if (req.method == "FULLBAN") {
             ban("req.http.host ~ .*");
             return (synth(200, "Full cache cleared"));
         }
-        if (req.method == "INFOBOARD_FRONT_FULL_BAN") {
-            ban("req.http.host == infoboard.michalwrona.pl");
-            return (synth(200, "Full cache cleared"));
-        }
-        if (req.http.host ~ "cms-infoboard.michalwrona.pl") {
-//            set req.backend_hint = nginx_infoboard_cms;
+
+        if (req.http.host ~ "djqubus.pl" || req.http.host ~ "admin.djqubus.pl") {
             set req.backend_hint = nginx_1;
-        } elsif (req.http.host ~ "infoboard.michalwrona.pl") {
-//            set req.backend_hint = nginx_infoboard_front;
-            set req.backend_hint = nginx_1;
+            if (req.http.upgrade) {
+                return (pipe);
+            }
+            return (pass);
         } else {
             set req.backend_hint = nginx_1;
-            return (pass);
-        }
-
-        if (req.http.host == "cms-infoboard.wronamichal.pl") {
             return (pass);
         }
 
