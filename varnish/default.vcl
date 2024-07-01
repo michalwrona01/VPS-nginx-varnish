@@ -23,6 +23,12 @@ sub vcl_recv {
             return (synth(200, "Full cache cleared"));
         }
 
+        if ((req.http.X-Forwarded-Proto && req.http.X-Forwarded-Proto != "https") || (req.http.Scheme && req.http.Scheme != "https")) {
+            return (synth(750));
+        } elseif (!req.http.X-Forwarded-Proto && !req.http.Scheme && !proxy.is_ssl()) {
+            return (synth(750));
+        }
+
         if (req.http.host ~ "www.djqubus.pl" || req.http.host ~ "djqubus.pl" || req.http.host ~ "admin.djqubus.pl") {
             set req.backend_hint = nginx_1;
             if (req.http.upgrade) {
@@ -65,5 +71,14 @@ sub vcl_deliver {
     unset resp.http.vary;
     unset resp.http.CF-Cache-Status;
     unset resp.http.CF-RAY;
+}
+
+sub vcl_synth {
+    if (resp.status == 750) {
+        set resp.status = 301;
+        set resp.http.location = "https://" + req.http.Host + req.url;
+        set resp.reason = "Moved";
+        return (deliver);
+    }
 }
 
