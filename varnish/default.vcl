@@ -25,8 +25,6 @@ sub vcl_recv {
 
         if ((req.http.X-Forwarded-Proto && req.http.X-Forwarded-Proto != "https") || (req.http.Scheme && req.http.Scheme != "https")) {
             return (synth(750));
-        } elseif (!req.http.X-Forwarded-Proto && !req.http.Scheme && !proxy.is_ssl()) {
-            return (synth(750));
         }
 
         if (req.http.host ~ "www.djqubus.pl" || req.http.host ~ "djqubus.pl" || req.http.host ~ "admin.djqubus.pl") {
