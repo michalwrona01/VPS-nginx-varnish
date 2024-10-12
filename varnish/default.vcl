@@ -38,7 +38,7 @@ sub vcl_recv {
             return (pass);
         }
 
-        if (req.http.host == "faker.michalwrona.pl") {
+        if (req.http.host == "faker.wronamichal.pl") {
             set req.backend_hint = faker_app;
         }
 
