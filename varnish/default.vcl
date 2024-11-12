@@ -20,7 +20,7 @@ sub vcl_pipe {
 }
 
 sub vcl_recv {
-        if (client.ip == "194.36.19.24") {
+        if (!(req.http.X-Forwarded-For ~ "194.36.19.24")) {
             return (synth(503));
         }
 
