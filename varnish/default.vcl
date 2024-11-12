@@ -1,5 +1,7 @@
 vcl 4.1;
 
+import file;
+
 backend nginx_1 {
     .host = "nginx_1";
     .port = "8080";
