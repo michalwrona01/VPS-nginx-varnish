@@ -84,7 +84,7 @@ sub vcl_synth {
     if (resp.status == 503) {
         set resp.http.Content-Type = "text/html; charset=utf-8";
         set resp.http.Cache-Control = "no-cache";
-        set resp.body = std.fileread("/etc/varnish/synth.html");
+        set resp.body = std.fileread("/var/www/500.html");
         return (deliver);
     }
 
