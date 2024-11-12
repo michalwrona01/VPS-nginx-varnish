@@ -1,6 +1,6 @@
 vcl 4.1;
 
-import file;
+import std;
 
 backend nginx_1 {
     .host = "nginx_1";
@@ -84,7 +84,7 @@ sub vcl_synth {
     if (resp.status == 503) {
         set resp.http.Content-Type = "text/html; charset=utf-8";
         set resp.http.Cache-Control = "no-cache";
-        synthetic(file("/var/www/500.html"));
+        set resp.body = std.fileread("/etc/varnish/synth.html");
         return (deliver);
     }
 
