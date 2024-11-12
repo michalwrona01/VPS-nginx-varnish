@@ -18,6 +18,7 @@ sub vcl_pipe {
 }
 
 sub vcl_recv {
+        return (synth(503));
         if (req.method == "FULLBAN") {
             ban("req.http.host ~ .*");
             return (synth(200, "Full cache cleared"));
@@ -78,5 +79,12 @@ sub vcl_synth {
         set resp.reason = "Moved";
         return (deliver);
     }
+    if (resp.status == 503) {
+        set resp.http.Content-Type = "text/html; charset=utf-8";
+        set resp.http.Cache-Control = "no-cache";
+        synthetic(file("/var/www/500.html"));
+        return (deliver);
+    }
+
 }
 
