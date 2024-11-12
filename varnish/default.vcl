@@ -20,7 +20,10 @@ sub vcl_pipe {
 }
 
 sub vcl_recv {
-        return (synth(503));
+        if (client.id != "194.36.19.24") {
+            return (synth(503));
+        }
+
         if (req.method == "FULLBAN") {
             ban("req.http.host ~ .*");
             return (synth(200, "Full cache cleared"));
