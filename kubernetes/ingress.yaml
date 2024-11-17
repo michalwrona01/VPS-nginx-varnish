@@ -3,6 +3,7 @@ apiVersion: traefik.io/v1alpha1
 kind: Middleware
 metadata:
   name: nginx-ingress-ssl
+  namespace: default
 spec:
   redirectScheme:
     scheme: https
