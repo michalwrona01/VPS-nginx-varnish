@@ -23,6 +23,6 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: order-app
+            name: varnish
             port:
               number: 80
