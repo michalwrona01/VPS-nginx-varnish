@@ -16,8 +16,7 @@ spec:
       containers:
       - name: order-app
         image: wronamichal/order-song-app:latest
-        command:
-          - daphne -b 0.0.0.0 -p 8080 main:app
+        command: ["daphne", "-b", "0.0.0.0", "-p", "8080", "main:app"]
         ports:
           - containerPort: 8080
 ---
