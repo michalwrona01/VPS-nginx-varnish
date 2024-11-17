@@ -23,7 +23,7 @@ spec:
       volumes:
         - name: varnish-config
           hostPath:
-            path: /var/www/VPS-nginx/kubernetes/varnish-config
+            path: /var/www/VPS-nginx/kubernetes/varnish/config
             type: Directory
 ---
 apiVersion: v1

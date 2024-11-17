@@ -25,11 +25,11 @@ spec:
       volumes:
         - name: nginx-html-volume
           hostPath:
-            path: /var/www/VPS-nginx/kubernetes/html
+            path: /var/www/VPS-nginx/kubernetes/nginx/wronamichal-pl
             type: Directory
         - name: nginx-conf-volume
           hostPath:
-            path: /var/www/VPS-nginx/kubernetes/conf.d
+            path: /var/www/VPS-nginx/kubernetes/nginx/conf.d
             type: Directory
 ---
 apiVersion: v1
