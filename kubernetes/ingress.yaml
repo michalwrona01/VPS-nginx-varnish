@@ -6,8 +6,7 @@ metadata:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
-  - host: wronamichal.pl
-    http:
+  - http:
       paths:
       - path: /
         pathType: Prefix
