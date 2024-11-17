@@ -36,10 +36,6 @@ sub vcl_recv {
         return(hash);
     }
 
-    if (req.method == "POST") {
-        return (pass);
-    }
-
     if (req.http.host == "cms-infoboard.wronamichal.pl") {
         set req.http.host = "cms-infoboard.wronamichal.pl";
         set req.backend_hint = cms;
