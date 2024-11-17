@@ -4,6 +4,16 @@ metadata:
   name: nginx-ingress
 spec:
   rules:
+  - host: cms-infoboard.wronamichal.pl
+    http:
+      paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: varnish
+              port:
+                number: 80
   - http:
       paths:
       - path: /
@@ -26,17 +36,6 @@ spec:
               number: 80
 
   - host: infoboard.wronamichal.pl
-    http:
-      paths:
-        - path: /
-          pathType: Prefix
-          backend:
-            service:
-              name: varnish
-              port:
-                number: 80
-
-  - host: cms-infoboard.wronamichal.pl
     http:
       paths:
         - path: /
