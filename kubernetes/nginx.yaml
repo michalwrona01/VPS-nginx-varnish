@@ -6,7 +6,7 @@ spec:
   selector:
     matchLabels:
       app: nginx
-  replicas: 2
+  replicas: 1
   template:
     metadata:
       labels:
@@ -17,6 +17,14 @@ spec:
         image: nginx:latest
         ports:
         - containerPort: 80
+        volumeMounts:
+          - name: nginx-html-volume
+            mountPath: /usr/share/nginx/html
+      volumes:
+        - name: nginx-html-volume
+          hostPath:
+            path: /var/www/VPS-nginx/kubernetes/html
+            type: Directory
 ---
 apiVersion: v1
 kind: Service
