@@ -1,0 +1,73 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cms-config
+data:
+    DEBUG: "1"
+    SECRET_KEY: "infoboard_secret_key"
+    ALLOWED_HOSTS: "*"
+    DB_NAME: "default"
+    DB_NAME_PUBLIC: "public"
+    DB_USERNAME: "admin"
+    DB_USERNAME_PUBLIC: "admin"
+    DB_PASSWORD: "admin"
+    DB_PASSWORD_PUBLIC: "admin"
+    DB_HOST: "db-default"
+    DB_HOST_PUBLIC: "db-public"
+    DB_PORT: "5432"
+    DB_PUBLIC_PORT: "5432"
+    CORS_ALLOWED_ORIGINS: "https://cms-infoboard.wronamichal.pl http://cms-infoboard.wronamichal.pl"
+    CSRF_TRUSTED_ORIGINS: "https://cms-infoboard.wronamichal.pl http://cms-infoboard.wronamichal.pl"
+    IS_PRODUCTION: "0"
+    IS_FRONT: "0"
+    IS_CMS: "1"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cms
+  labels:
+    app: cms
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: cms
+  template:
+    metadata:
+      labels:
+        app: cms
+    spec:
+      containers:
+        - name: cms
+          imagePullPolicy: Always
+          image: wronamichal/infoboard:latest
+          envFrom:
+            - configMapRef:
+                name: cms-config
+          command: ["./manage.py", "runserver", "0.0.0.0:8080"]
+          ports:
+          - containerPort: 8080
+          volumeMounts:
+            - name: mediafiles
+              mountPath: /code/mediafiles
+      volumes:
+        - name: mediafiles
+          hostPath:
+            path: /var/www/VPS-nginx/kubernetes/nginx/conf.d
+            type: DirectoryOrCreate
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cms
+  labels:
+    app: cms
+spec:
+  type: ClusterIP
+  selector:
+    app: cms
+  ports:
+    - port: 8080
+      protocol: TCP
+      targetPort: 8080
