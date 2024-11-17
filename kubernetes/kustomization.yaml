@@ -4,3 +4,4 @@ resources:
   - nginx.yaml
   - varnish.yaml
   - ingress.yaml
+  - order-app.yaml

@@ -1,0 +1,37 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: order-app
+spec:
+  selector:
+    matchLabels:
+      app: order-app
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: order-app
+    spec:
+      containers:
+      - name: order-app
+        image: ghcr.io/michalwrona01/order-song-app:latest
+        command:
+          - daphne -b 0.0.0.0 -p 8080 main:app
+        ports:
+          - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: order-app
+  labels:
+    app: order-app
+spec:
+  type: ClusterIP
+  selector:
+    app: order-app
+  ports:
+  - name: http
+    port: 80
+    targetPort: 8080
