@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: order-app
-        image: ghcr.io/michalwrona01/order-song-app:latest
+        image: ghcr.io/michalwrona01/order-song-app:sha256-a2ae4adcbaa2bf1a4e71440d5dde8a29b962d32eff0e30fd83f962055ec8235f.sig
         command:
           - daphne -b 0.0.0.0 -p 8080 main:app
         ports:
