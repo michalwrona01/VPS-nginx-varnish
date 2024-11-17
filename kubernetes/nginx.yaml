@@ -20,10 +20,16 @@ spec:
         volumeMounts:
           - name: nginx-html-volume
             mountPath: /usr/share/nginx/html
+          - name: nginx-conf-volume
+            mountPath: /etc/nginx/conf.d
       volumes:
         - name: nginx-html-volume
           hostPath:
             path: /var/www/VPS-nginx/kubernetes/html
+            type: Directory
+        - name: nginx-conf-volume
+          hostPath:
+            path: /var/www/VPs-nginx/kubernetes/conf.d
             type: Directory
 ---
 apiVersion: v1
