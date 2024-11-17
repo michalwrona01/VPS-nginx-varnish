@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: varnish
+spec:
+  selector:
+    matchLabels:
+      app: varnish
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: varnish
+    spec:
+      containers:
+      - name: varnish
+        image: varnish:latest
+        ports:
+        - containerPort: 80
+        volumeMounts:
+          - name: varnish-config
+            mountPath: /etc/varnish/
+      volumes:
+        - name: varnish-config
+          hostPath:
+            path: /var/www/VPS-nginx/kubernetes/varnish-config
+            type: Directory
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: varnish
+  labels:
+    app: varnish
+spec:
+  type: ClusterIP
+  selector:
+    app: varnish
+  ports:
+  - name: http
+    port: 80
+    targetPort: 80
