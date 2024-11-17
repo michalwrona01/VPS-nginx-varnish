@@ -29,7 +29,7 @@ spec:
             type: Directory
         - name: nginx-conf-volume
           hostPath:
-            path: /var/www/VPs-nginx/kubernetes/conf.d
+            path: /var/www/VPs-nginx/kubernetes/conf
             type: Directory
 ---
 apiVersion: v1
