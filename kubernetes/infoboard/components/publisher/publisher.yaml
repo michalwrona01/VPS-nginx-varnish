@@ -1,73 +1,73 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: publisher-config
-data:
-    DEBUG: "1"
-    SECRET_KEY: "infoboard_secret_key"
-    ALLOWED_HOSTS: "*"
-    DB_NAME: "default"
-    DB_NAME_PUBLIC: "public"
-    DB_USERNAME: "admin"
-    DB_USERNAME_PUBLIC: "admin"
-    DB_PASSWORD: "admin"
-    DB_PASSWORD_PUBLIC: "admin"
-    DB_HOST: "db-default"
-    DB_HOST_PUBLIC: "db-public"
-    DB_PORT: "5432"
-    DB_PUBLIC_PORT: "5432"
-    CORS_ALLOWED_ORIGINS: "http://0.0.0.0:8000"
-    CSRF_TRUSTED_ORIGINS: "http://0.0.0.0:8000"
-    IS_PRODUCTION: "0"
-    IS_FRONT: "0"
-    IS_CMS: "0"
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: publisher
-  labels:
-    app: publisher
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: publisher
-  template:
-    metadata:
-      labels:
-        app: publisher
-    spec:
-      containers:
-        - name: publisher
-          imagePullPolicy: Always
-          image: wronamichal/infoboard:latest
-          envFrom:
-            - configMapRef:
-                name: publisher-config
-          command: ["./manage.py", "publisher"]
-          ports:
-          - containerPort: 8080
-          volumeMounts:
-            - name: mediafiles
-              mountPath: /code/mediafiles
-      volumes:
-        - name: mediafiles
-          hostPath:
-            path: /var/www/VPS-nginx/kubernetes/nginx/conf.d
-            type: DirectoryOrCreate
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: publisher
-  labels:
-    app: publisher
-spec:
-  type: ClusterIP
-  selector:
-    app: publisher
-  ports:
-    - port: 8080
-      protocol: TCP
-      targetPort: 8080
+#apiVersion: v1
+#kind: ConfigMap
+#metadata:
+#  name: publisher-config
+#data:
+#    DEBUG: "1"
+#    SECRET_KEY: "infoboard_secret_key"
+#    ALLOWED_HOSTS: "*"
+#    DB_NAME: "default"
+#    DB_NAME_PUBLIC: "public"
+#    DB_USERNAME: "admin"
+#    DB_USERNAME_PUBLIC: "admin"
+#    DB_PASSWORD: "admin"
+#    DB_PASSWORD_PUBLIC: "admin"
+#    DB_HOST: "db-default"
+#    DB_HOST_PUBLIC: "db-public"
+#    DB_PORT: "5432"
+#    DB_PUBLIC_PORT: "5432"
+#    CORS_ALLOWED_ORIGINS: "http://0.0.0.0:8000"
+#    CSRF_TRUSTED_ORIGINS: "http://0.0.0.0:8000"
+#    IS_PRODUCTION: "0"
+#    IS_FRONT: "0"
+#    IS_CMS: "0"
+#---
+#apiVersion: apps/v1
+#kind: Deployment
+#metadata:
+#  name: publisher
+#  labels:
+#    app: publisher
+#spec:
+#  replicas: 1
+#  selector:
+#    matchLabels:
+#      app: publisher
+#  template:
+#    metadata:
+#      labels:
+#        app: publisher
+#    spec:
+#      containers:
+#        - name: publisher
+#          imagePullPolicy: Always
+#          image: wronamichal/infoboard:latest
+#          envFrom:
+#            - configMapRef:
+#                name: publisher-config
+#          command: ["./manage.py", "publisher"]
+#          ports:
+#          - containerPort: 8080
+#          volumeMounts:
+#            - name: mediafiles
+#              mountPath: /code/mediafiles
+#      volumes:
+#        - name: mediafiles
+#          hostPath:
+#            path: /var/www/VPS-nginx/kubernetes/nginx/conf.d
+#            type: DirectoryOrCreate
+#---
+#apiVersion: v1
+#kind: Service
+#metadata:
+#  name: publisher
+#  labels:
+#    app: publisher
+#spec:
+#  type: ClusterIP
+#  selector:
+#    app: publisher
+#  ports:
+#    - port: 8080
+#      protocol: TCP
+#      targetPort: 8080
