@@ -3,10 +3,10 @@ kind: Kustomization
 resources:
   - nginx/nginx.yaml
   - varnish/varnish.yaml
-  - order-app/order-app.yaml
+#  - order-app/order-app.yaml
   - ingress.yaml
-  - infoboard/components/cms/cms.yaml
-  - infoboard/components/front/front.yaml
-  - infoboard/components/publisher/publisher.yaml
-  - infoboard/components/db/default/db_default.yaml
-  - infoboard/components/db/public/db_public.yaml
+#  - infoboard/components/cms/cms.yaml
+#  - infoboard/components/front/front.yaml
+#  - infoboard/components/publisher/publisher.yaml
+#  - infoboard/components/db/default/db_default.yaml
+#  - infoboard/components/db/public/db_public.yaml
