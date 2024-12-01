@@ -22,7 +22,7 @@ spec:
             mountPath: /etc/varnish/
       - name: varnish-ncsa
         image: varnish:latest
-        command: ["/etc/varnish", "-c", "varnishncsa"]
+        command: ["/bin/sh", "-c", "varnishncsa -n /var/lib/varnish"]
         volumeMounts:
           - name: varnish-config
             mountPath: /etc/varnish
