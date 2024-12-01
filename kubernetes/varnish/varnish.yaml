@@ -20,6 +20,12 @@ spec:
         volumeMounts:
           - name: varnish-config
             mountPath: /etc/varnish/
+      - name: varnish-ncsa
+        image: varnish:latest
+        command: ["/etc/varnish", "-c", "varnishncsa"]
+        volumeMounts:
+          - name: varnish-config
+            mountPath: /etc/varnish
       volumes:
         - name: varnish-config
           hostPath:
