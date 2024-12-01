@@ -15,13 +15,6 @@ spec:
       containers:
       - name: varnish
         image: varnish:latest
-        args:
-          - "-a" # Address and port to listen on
-          - ":80"
-          - "-f"
-          - "/etc/varnish/default.vcl"
-          - "-s"
-          - "malloc,256m" # Storage allocation
         ports:
         - containerPort: 80
         volumeMounts:
