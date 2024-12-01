@@ -15,11 +15,24 @@ spec:
       containers:
       - name: varnish
         image: varnish:latest
+        args:
+          - "-a" # Address and port to listen on
+          - ":80"
+          - "-f"
+          - "/etc/varnish/default.vcl"
+          - "-s"
+          - "malloc,256m" # Storage allocation
         ports:
         - containerPort: 80
         volumeMounts:
           - name: varnish-config
             mountPath: /etc/varnish/
+      - name: varnish-ncsa
+        image: varnish:latest
+        command: ["/bin/sh", "-c", "varnishncsa" ]
+        volumeMounts:
+          - name: varnish-config
+            mountPath: /etc/varnish
       volumes:
         - name: varnish-config
           hostPath:
