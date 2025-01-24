@@ -6,11 +6,11 @@ backend nginx_1 {
     .host = "nginx_1";
     .port = "8080";
 }
-
-backend faker_app {
-    .host = "faker_app";
-    .port = "8083";
-}
+//
+//backend faker_app {
+//    .host = "faker_app";
+//    .port = "8083";
+//}
 
 sub vcl_pipe {
     if (req.http.upgrade) {
@@ -20,40 +20,30 @@ sub vcl_pipe {
 }
 
 sub vcl_recv {
-        if (!(req.http.X-Forwarded-For ~ "194.36.19.24")) {
-            return (synth(503));
-        }
-
         if (req.method == "FULLBAN") {
             ban("req.http.host ~ .*");
             return (synth(200, "Full cache cleared"));
         }
 
-        if ((req.http.X-Forwarded-Proto && req.http.X-Forwarded-Proto != "https") || (req.http.Scheme && req.http.Scheme != "https")) {
-            return (synth(750));
-        }
+        set req.backend_hint = nginx_1;
 
-        if (req.http.host ~ "www.djqubus.pl" || req.http.host ~ "djqubus.pl" || req.http.host ~ "admin.djqubus.pl") {
-            set req.backend_hint = nginx_1;
-            if (req.http.upgrade) {
-                return (pipe);
-            }
-            return (pass);
-        } else {
-            set req.backend_hint = nginx_1;
-            return (pass);
-        }
-
-        if (req.http.host == "faker.wronamichal.pl") {
-            set req.backend_hint = faker_app;
-        }
+//        if (req.http.host ~ "www.djqubus.pl" || req.http.host ~ "djqubus.pl" || req.http.host ~ "admin.djqubus.pl") {
+//            set req.backend_hint = nginx_1;
+//            if (req.http.upgrade) {
+//                return (pipe);
+//            }
+//            return (pass);
+//        } else {
+//            set req.backend_hint = nginx_1;
+//            return (pass);
+//        }
 
         if (req.url ~ "^[^?]*\.(7z|avi|bmp|bz2|css|csv|doc|docx|eot|flac|flv|gif|gz|ico|jpeg|jpg|js|less|mka|mkv|mov|mp3|mp4|mpeg|mpg|odt|ogg|ogm|opus|otf|pdf|png|ppt|pptx|rar|rtf|svg|svgz|swf|tar|tbz|tgz|ttf|txt|txz|wav|webm|webp|woff|woff2|xls|xlsx|xml|xz|zip)(\?.*)?$") {
             unset req.http.Cookie;
               unset req.http.Authorization;
             return(hash);
         }
-        if (req.method != "GET") {
+        if (req.method == "POST") {
             return (pass);
         }
         return(hash);
