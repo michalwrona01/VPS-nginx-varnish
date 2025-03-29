@@ -10,7 +10,6 @@ services:
       - /var/www/ThalosCinemaSystem/mediafiles:/var/www/ThalosCinemaSystem/mediafiles
       - /var/www/majkelpc:/var/www/majkelpc
       - /var/www/order-song/staticfiles:/var/www/order-song/staticfiles
-      - /var/www/VPS-nginx/file.pdf:/var/www/mediafiles
     ports:
       - "8080:8080"
     networks:
